@@ -1,11 +1,9 @@
 import express from "express";
 import { register, login } from "../controller/authController";
 
-const app = express();
+const router = express.Router();
 
-app.use(express.json());
+router.post("/signup", register);
+router.post("/login", login);
 
-app.post("/signup", register);
-app.post("/login", login);
-
-export default app;
+export default router;

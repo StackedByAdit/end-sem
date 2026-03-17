@@ -1,20 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { apiClient } from "@/lib/axios-instance";
 
 interface LoginResponse {
   token: string;
   message: string;
-  user: {
-    id: number;
-    email: string;
-  };
 }
 
 export function Signin() {
-
   const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +25,7 @@ export function Signin() {
       });
 
       localStorage.setItem("token", response.data.token);
-      navigate("/");
+      navigate("/blogs");
     } catch {
       setErrorMessage("Login failed. Please check your credentials.");
     } finally {
@@ -40,7 +34,7 @@ export function Signin() {
   }
 
   return (
-    <section className="mx-auto max-w-md space-y-4">
+    <section className="mx-auto mt-10 max-w-md space-y-4">
       <h1 className="text-2xl font-semibold">Login</h1>
 
       <input
@@ -63,10 +57,14 @@ export function Signin() {
         type="button"
         onClick={handleClick}
         disabled={isLoading}
-        className="rounded bg-black px-4 py-2 text-white disabled:opacity-60 cursor-pointer"
+        className="cursor-pointer rounded bg-black px-4 py-2 text-white disabled:opacity-60"
       >
         {isLoading ? "Logging in..." : "Login"}
       </button>
+
+      <p>
+        Don&apos;t have an account? <Link to="/signup" className="underline">Sign up</Link>
+      </p>
 
       {errorMessage ? <p className="text-sm text-red-600">{errorMessage}</p> : null}
     </section>
