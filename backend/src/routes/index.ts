@@ -1,10 +1,10 @@
-import express from "express"
+import express from "express";
 import authRoute from "./authRoute";
-// import blogRoute from "./blogRoute";
+import blogRoute from "./blogRoute";
 
-const app = express();
+const router = express.Router();
 
-app.use("/auth", authRoute);
-// router.use("/blogs", blogRoute);
+router.use("/auth", authRoute);
+router.use("/blogs", blogRoute);
 
-export default app;
+export default router;

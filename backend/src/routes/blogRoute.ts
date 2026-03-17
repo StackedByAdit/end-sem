@@ -1,17 +1,11 @@
 import express from "express";
-import { getBlogs, getBlogById } from "../controller/blogController";
-import { register, login } from "../controller/authController";
+import { createBlog, getBlogById, getBlogs } from "../controller/blogController";
 import { authMiddleware } from "../authMiddleware";
-import { resolve } from "bun";
 
-const app = express();
+const router = express.Router();
 
-app.use(express.json());
+router.get("/", getBlogs);
+router.get("/:id", getBlogById);
+router.post("/", authMiddleware, createBlog);
 
-app.post("/signup", register);
-app.post("/login", login);
-app.get("/blogs", getBlogs);
-app.get("/blogs/:id", getBlogById);
-app.post("/blogs", authMiddleware);
-
-export default app;
+export default router;
